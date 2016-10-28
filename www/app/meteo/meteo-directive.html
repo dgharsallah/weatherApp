@@ -1,0 +1,180 @@
+<div>
+<ion-content class="has-header" style="
+    background:url('{{vm.getBackgroundImage(vm.weatherData.icon_url)}}'); background-size: cover;">
+<style type="text/css">
+  /*#table > span:first-child {
+    float:left;
+  }
+  #table > span:last-child {
+    float:right;
+  }*/
+  td {
+    vertical-align:middle;
+    text-align:center;
+    padding-top:3%;
+
+  }
+  th {
+    vertical-align:middle;
+    text-align:center;
+  }
+
+</style>
+
+  <div style="margin: 1% 1%;
+    padding: 2% 3%;
+    display: block;
+    color:white;
+    margin-bottom: 76%;
+    height:100%;
+    border-radius: 1%;">
+  
+  <h1 style="color:white; margin: 7% 0% 0%;">{{vm.weatherData.temp_c}}˚</h1>
+  <h2 style="color:white; margin: 1% 0%;font-size:175%;">{{vm.weatherData.weather}}</h2>
+    <span class="ng-binding">{{vm.dailyWeather[0].high.celsius}}˚ / {{vm.dailyWeather[0].low.celsius}}˚</span><br>
+  <i class="wi" ng-class="vm.getWeatherIconClass(vm.weatherData.icon_url)" 
+   
+  style="right: 5%;
+    padding: 1% 1%;
+    border-radius: 5%;
+    font-size: 270%;
+    position: absolute;
+    top: 3%;">
+      
+    </i>
+
+
+</div>
+
+<div style="
+    padding: 1% 1%;">
+  	<div style="         margin: 2% 1% 2%;
+    padding: 2% 3%;
+    display: block;
+    color:white;
+    border-radius: 1%;
+    background-color: rgba(70, 53, 53, 0.2);">
+  
+  <h3 style="color:white;    margin-bottom: 5%;">NOW</h3>
+    <span style="font-size:170%;">{{vm.weatherData.temp_c}}˚</span><br>
+      <span style="font-size:85%;">Feels like</span>
+      <table style="width:100%; margin-top:5%;">
+        <tr>
+         <td>
+          <i class="wi wi-strong-wind" ></i>
+         </td>
+         <td>
+          Wind
+         </td>
+         <td style="width:70%; text-align:right">
+          {{vm.weatherData.wind_kph}} kph
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <i class="wi wi-humidity" ></i>
+         </td>
+         <td>
+          Humidity
+         </td>
+         <td style="width:70%; text-align:right">
+          {{vm.weatherData.relative_humidity}} 
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <i class="wi wi-barometer" ></i>
+         </td>
+         <td>
+          Pressure
+         </td>
+         <td style="width:70%; text-align:right">
+          {{vm.weatherData.pressure_in}} in
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <i style=" font-size:150%" class="ion-ios-sunny" ></i>
+         </td>
+         <td>
+          UV index
+         </td>
+         <td style="width:70%; text-align:right;">
+          {{vm.weatherData.UV}}
+         </td>
+        </tr>
+      </table>
+      <div id="table">
+
+
+</div>
+</div>
+
+<div style="    margin: 2% 1% 2%;
+    padding: 2% 3%;
+    display: block;
+    border-radius: 1%;
+    color:white;
+    background-color: rgba(70, 53, 53, 0.2);">
+  
+  <h3 style="color:white; margin-bottom: 5%;">HOURLY</h3>
+    
+      
+      <table style="width:100%">
+        <tr style="text-align:left;">
+          <th>Time</th>
+          <th>Cond</th>
+          <th>Temp</th>
+          <th>Humid</th>
+          <th>Wind</th>
+        </tr>
+        <trbody>
+        <tr ng-repeat="hw in vm.hourlyWeather | limitTo:5">
+          <td>{{hw.FCTTIME.hour}} {{hw.FCTTIME.ampm}}</td>
+          <td><i style="font-size:130%;" class="wi {{vm.getWeatherIconClass(hw.icon_url)}}"></i></td>
+          <td>{{hw.feelslike.metric}}˚</td>
+          <td>{{hw.humidity}} <i style="font-size:85%" class="wi wi-humidity"></i></td>
+          <td>{{hw.wspd.metric}} kph</td>
+        </tr>
+        </trbody>
+      </table>
+      
+</div>
+
+<div style="     margin: 2% 1% 2%;
+    padding: 2% 3%;
+    display: block;
+    color:white;
+    border-radius: 1%;
+
+    background-color: rgba(70, 53, 53, 0.2);">
+  
+  <h3 style="color:white;    margin-bottom: 5%;">DAILY</h3>
+    
+      
+      <table style="width:100%;">
+        <tr ng-repeat="j in [0,1,2,3,4]">
+          <td ng-if="j == 0" ng-repeat="i in [1,2,3,4,5]">
+            {{vm.getParamById(i, j)}}
+          </td>
+          <td ng-if="j == 1" ng-repeat="i in [1,2,3,4,5]">
+            <i style="font-size:130%;" class="wi {{vm.getWeatherIconClass(vm.getParamById(i, j))}}" ></i>
+          </td>
+          <td style='font-size: 130%' ng-if="j == 2" ng-repeat="i in [1,2,3,4,5]">
+            {{vm.getParamById(i, j)}}˚<br>
+          </td>
+          <td style="padding-top:0%" ng-if="j == 3" ng-repeat="i in [1,2,3,4,5]">
+           {{vm.getParamById(i, j)}}˚
+          </td>
+          <td ng-if="j == 4" ng-repeat="i in [1,2,3,4,5]">
+           {{vm.getParamById(i, j)}}
+           <i style="font-size:85%" class="wi wi-humidity" ></i>
+          </td>
+        </tr>
+      </table>
+      
+</div>
+</div>
+
+</ion-content>
+</div>
